@@ -13,6 +13,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
 # include <readline/readline.h>
@@ -24,9 +25,14 @@
 
 typedef struct s_shell
 {
-	char	**env;
+	char		  **env;	//to save the environment variables
+	int		shell_level;//to save the shell_level
 }			t_shell;
 
 t_shell	*get_structure(void);
+
+//utils.c
+int		ft_strlen(char *str);
+char	*ft_strdup(char *src);
 
 #endif

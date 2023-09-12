@@ -6,7 +6,7 @@
 #    By: scosta-j <scosta-j@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 16:21:22 by scosta-j          #+#    #+#              #
-#    Updated: 2023/09/07 16:26:00 by scosta-j         ###   ########.fr        #
+#    Updated: 2023/09/09 14:24:50 by scosta-j         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ LDFLAGS		=	-lreadline
 RM			=	/bin/rm -f
 NAME		=	minishell
 INCLUDES	=	./includes
-SRCS		=	main.c
+SRCS		=	main.c utils.c
 OBJS		=	$(SRCS:.c=.o)
 
 all:	$(NAME)
