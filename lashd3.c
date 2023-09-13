@@ -391,8 +391,7 @@ int setupRedirections(struct childProgram * prog) {
     return 0;
 }
 
-int runCommand(struct job newJob, struct jobSet * jobList, 
-               int inBg) {
+int runCommand(struct job newJob, struct jobSet * jobList, int inBg) {
     struct job * job;
     char * newdir, * buf;
     int i, len;

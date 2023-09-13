@@ -13,6 +13,7 @@
 
 #define MAX_COMMAND_LEN 250     /* max length of a single command 
                                    string */
+
 #define JOB_STATUS_FORMAT "[%d] %-22s %.40s\n"
 
 enum redirectionType { REDIRECT_INPUT, REDIRECT_OVERWRITE, REDIRECT_APPEND };
@@ -63,15 +64,13 @@ int getCommand(FILE * source, char * command) {
         printf("# ");
         fflush(stdout);
     }
-
     if (!fgets(command, MAX_COMMAND_LEN, source)) {
-        if (source == stdin) printf("\n");
+        if (source == stdin) 
+            printf("\n");
         return 1;
     }
-
     /* remove trailing newline */
     command[strlen(command) - 1] = '\0';
-
     return 0;
 }
 
@@ -332,8 +331,7 @@ int setupRedirections(struct childProgram * prog) {
     return 0;
 }
 
-int runCommand(struct job newJob, struct jobSet * jobList, 
-               int inBg) {
+int runCommand(struct job newJob, struct jobSet * jobList, int inBg) {
     struct job * job;
     int i;
     int nextin, nextout;
@@ -488,20 +486,9 @@ int main(int argc, char ** argv) {
     int inBg;
 
     if (argc > 2) {
-        fprintf(stderr, "unexpected arguments; usage: ladsh1 "
-                        "<commands>\n");
+        printf("please remove arguments\n");
         exit(1);
-    } else if (argc == 2) {
-        input = fopen(argv[1], "r");
-        if (!input) {
-            perror("fopen");
-            exit(1);
-        }
-    }
-
-    /* don't pay any attention to this signal; it just confuses 
-       things and isn't really meant for shells anyway */
-    signal(SIGTTOU, SIG_IGN);
+    } 
     
     while (1) {
         if (!jobList.fg) {
@@ -511,14 +498,13 @@ int main(int argc, char ** argv) {
             checkJobs(&jobList);
 
             if (!nextCommand) {
-                if (getCommand(input, command)) break;
+                if (getCommand(input, command)) 
+                    break;
                 nextCommand = command;
             }
 
-            if (!parseCommand(&nextCommand, &newJob, &inBg) &&
-                              newJob.numProgs) {
+            if (!parseCommand(&nextCommand, &newJob, &inBg) && newJob.numProgs)
                 runCommand(newJob, &jobList, inBg);
-            }
         } else {
             /* a job is running in the foreground; wait for it */
             i = 0;

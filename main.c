@@ -12,6 +12,9 @@
 
 #include "minishell.h"
 
+int a = 3;
+
+
 void	print_env()
 {
     for (int i = 0; get_structure()->env[i] != NULL; i++) {

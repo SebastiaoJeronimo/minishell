@@ -319,17 +319,10 @@ int main(int argc, char ** argv) {
     int status;
     int inBg;
 
-    if (argc > 2) {
-        fprintf(stderr, "unexpected arguments; usage: ladsh1 "
-                        "<commands>\n");
+   if (argc > 2) {
+        printf("please remove arguments\n");
         exit(1);
-    } else if (argc == 2) {
-        input = fopen(argv[1], "r");
-        if (!input) {
-            perror("fopen");
-            exit(1);
-        }
-    }
+    } 
 
     /* don't pay any attention to this signal; it just confuses 
        things and isn't really meant for shells anyway */
@@ -346,11 +339,8 @@ int main(int argc, char ** argv) {
                 if (getCommand(input, command)) break;
                 nextCommand = command;
             }
-
-            if (!parseCommand(&nextCommand, &newJob, &inBg) &&
-                              newJob.numProgs) {
+            if (!parseCommand(&nextCommand, &newJob, &inBg) &&newJob.numProgs)
                 runCommand(newJob, &jobList, inBg);
-            }
         } else {
             /* a job is running in the foreground; wait for it */
             i = 0;
