@@ -30,7 +30,8 @@ typedef struct s_shell
 }			t_shell;
 
 t_shell	*get_structure(void);
-
+void	set_signals();
+void	pwd();
 //utils.c
 int		ft_strlen(char *str);
 char	*ft_strdup(char *src);

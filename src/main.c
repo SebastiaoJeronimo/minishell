@@ -10,15 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
-void	print_env()
-{
-    for (int i = 0; get_structure()->env[i] != NULL; i++) {
-        printf("%s\n", get_structure()->env[i]);
-    }
-}
 
+/**
+ * @brief returns a pointer to the static shell struct
+*/
 t_shell	*get_structure(void)
 {
 	static t_shell	shell;
@@ -27,7 +24,7 @@ t_shell	*get_structure(void)
 }
 
 /**
- * VER LEAKS NO FINAL DO PROGRAMA
+ * @brief allocates envp to the static shell struct
 */
 void	initialize_shell(int argc, char **argv, char **envp)
 {
@@ -43,35 +40,27 @@ void	initialize_shell(int argc, char **argv, char **envp)
 		i++;
 	get_structure()->env = malloc((i + 1) * sizeof(char *)); //checkar malloc
 	if(!get_structure()->env)
-		exit(0); //free as cenas 
+		exit(0); //free
 	while (j < i)
 	{
-		get_structure()->env[j] = ft_strdup(envp[j]); //free as cenas
+		get_structure()->env[j] = ft_strdup(envp[j]); //free
 		j++;
 	}
 	get_structure()->env[j] = NULL;
+	set_signals();
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-
-	// char	*prompt;
-	// int 	i = 3;
+	char	*prompt;
 
 	initialize_shell(argc, argv, envp);
-	print_env();
-	printf("%lu\n", sizeof(char *));
-	// while (i)
-	// {
-	// 	prompt = readline("$>");
-	// 	printf("GANDA COMMANDO\n");
-	// 	add_history(prompt);
-	// 	free(prompt);
-	// 	i--;
-	// }
-	// rl_clear_history();
-    // for (int i = 0; envp[i] != NULL; i++) PRINTS THE ENVIROMENT VARIABLES
-    //     printf("%s\n", envp[i]);
+	
+	while (1)
+	{
+		prompt = readline("$>");
+		if (strlen(prompt) != 0)
+			add_history(prompt);
+		free(prompt);
+	}
 }
-
-ls >out.txt <in1.txt <in2.txt <in3.txt
