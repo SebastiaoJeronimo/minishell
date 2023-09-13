@@ -6,7 +6,7 @@
 #    By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 16:21:22 by scosta-j          #+#    #+#              #
-#    Updated: 2023/09/13 19:41:08 by rvaz             ###   ########.fr        #
+#    Updated: 2023/09/13 21:10:32 by rvaz             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ $(NAME): $(LIBFT) $(SRCS)
 	@$(CC) $(CFLAGS) $(SRCS) $(LIBFLAGS) -o $(NAME)
 
 $(LIBFT):
-	@make -C $(LIBFT_PATH) all
+	@make -C $(LIBFT_PATH)
 
 clean:
 	@$(RM) $(OBJS)

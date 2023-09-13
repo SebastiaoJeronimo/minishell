@@ -13,6 +13,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include "../lib/libft/libft.h"
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
@@ -31,9 +32,16 @@ typedef struct s_shell
 
 t_shell	*get_structure(void);
 void	set_signals();
-void	pwd();
-//utils.c
-int		ft_strlen(char *str);
-char	*ft_strdup(char *src);
+
+//	Built-ins
+
+void	cd(char *arg);
+void	echo(char *arg);
+void	print_env(void);
+void	exit_shell(int exit_code);
+void	export(void);
+void	pwd(void);
+void	unset(char *arg);
+void	pwd(void);
 
 #endif

@@ -6,8 +6,16 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:28:32 by rvaz              #+#    #+#             */
-/*   Updated: 2023/09/13 19:28:14 by rvaz             ###   ########.fr       */
+/*   Updated: 2023/09/13 21:12:43 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+/**
+ *	@brief set the export attribute for variables
+*/
+void	export(void)
+{
+	
+}

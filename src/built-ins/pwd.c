@@ -6,13 +6,16 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:10:29 by rvaz              #+#    #+#             */
-/*   Updated: 2023/09/13 19:42:35 by rvaz             ###   ########.fr       */
+/*   Updated: 2023/09/13 21:12:45 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	pwd()
+/**
+ *	@brief print name of current/working directory
+*/
+void	pwd(void)
 {
 	char *pwd;
 	

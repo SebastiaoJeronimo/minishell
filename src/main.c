@@ -46,7 +46,6 @@ void	initialize_shell(int argc, char **argv, char **envp)
 		j++;
 	}
 	get_structure()->env[j] = NULL;
-	set_signals();
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -54,11 +53,11 @@ int	main(int argc, char **argv, char **envp)
 	char	*prompt;
 
 	initialize_shell(argc, argv, envp);
-	
+	//set_signals();	
 	while (1)
 	{
 		prompt = readline("$>");
-		if (strlen(prompt) != 0)
+		if (ft_strlen(prompt) != 0)
 			add_history(prompt);
 		free(prompt);
 	}

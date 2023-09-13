@@ -6,8 +6,16 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 12:44:29 by scosta-j          #+#    #+#             */
-/*   Updated: 2023/09/13 19:27:59 by rvaz             ###   ########.fr       */
+/*   Updated: 2023/09/13 21:09:09 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+/**
+ * @brief change the working directory
+*/
+void	cd(char *arg)
+{
+	(void)arg;
+}

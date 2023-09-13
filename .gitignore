@@ -1,4 +1,5 @@
-./vscode
+.vscode/
 minishell
 *.txt
 .nfs*
+./a.out
