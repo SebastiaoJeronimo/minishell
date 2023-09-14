@@ -27,7 +27,7 @@
 typedef struct s_shell
 {
 	char		  **env;	//to save the environment variables
-	int		shell_level;//to save the shell_level
+	int		shell_level;	//to save the shell_level
 }			t_shell;
 
 t_shell	*get_structure(void);
@@ -35,7 +35,7 @@ void	set_signals();
 
 //	Built-ins
 
-void	cd(char *arg);
+int		cd(char *arg);
 void	echo(char *arg);
 void	print_env(void);
 void	exit_shell(int exit_code);
@@ -43,5 +43,9 @@ void	export(void);
 void	pwd(void);
 void	unset(char *arg);
 void	pwd(void);
+
+//	Utils
+
+char *find_env_var(char *arg);
 
 #endif

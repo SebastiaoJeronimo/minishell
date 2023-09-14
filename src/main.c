@@ -23,26 +23,40 @@ t_shell	*get_structure(void)
 }
 
 /**
+ * @brief free all memory alocated to the t_shell struct
+*/
+static void	free_env(t_shell *shell)
+{
+	int		i;
+
+	i = 0;
+	if (!shell->env)
+		return ;
+	while (shell->env[i])
+		free(shell->env[i++]);
+	free(shell->env);
+}
+
+/**
  * @brief allocates envp to the static shell struct
 */
-void	initialize_shell(int argc, char **argv, char **envp)
+static void	initialize_shell(int argc, char **envp)
 {
 	int		i;
 	int		j;
 
 	i = 0;
 	j = 0;
-	(void) argv;
 	if (argc != 1)
 		exit(0);
 	while (envp[i])
 		i++;
 	get_structure()->env = malloc((i + 1) * sizeof(char *)); //checkar malloc
-	if(!get_structure()->env)
+	if (!get_structure()->env)
 		exit(0); //free
 	while (j < i)
 	{
-		get_structure()->env[j] = ft_strdup(envp[j]); //free
+		get_structure()->env[j] = ft_strdup(envp[j]);
 		j++;
 	}
 	get_structure()->env[j] = NULL;
@@ -52,13 +66,21 @@ int	main(int argc, char **argv, char **envp)
 {
 	char	*prompt;
 
-	initialize_shell(argc, argv, envp);
-	//set_signals();	
+	(void)argv;
+	prompt = NULL;
+	initialize_shell(argc, envp);
 	while (1)
 	{
+		set_signals();
 		prompt = readline("$>");
-		if (ft_strlen(prompt) != 0)
+		if (prompt && *prompt)
 			add_history(prompt);
-		free(prompt);
+		if (prompt)
+		{
+			unset(NULL);
+			free(prompt);
+		}
 	}
+	free_env(get_structure());
+	rl_clear_history();
 }

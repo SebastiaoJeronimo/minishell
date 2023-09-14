@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 12:44:29 by scosta-j          #+#    #+#             */
-/*   Updated: 2023/09/13 21:09:09 by rvaz             ###   ########.fr       */
+/*   Updated: 2023/09/14 16:45:58 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,25 @@
 
 /**
  * @brief change the working directory
+ * @return on sucess, 0 is returned. On error, -1 is returned.
 */
-void	cd(char *arg)
+int	cd(char *arg)
 {
-	(void)arg;
+	int	r;
+	
+	r = -1;
+	if (!arg)
+	{
+		if (access(find_env_var("HOME"), X_OK) == 0)
+			r = chdir(find_env_var("HOME"));
+		return (r);
+	}
+	if (!*arg)
+		return (0);
+	if (access(arg, X_OK) == 0)
+		r = chdir(arg);
+	return (r);
+	// Need help to handle multiple parameters errors
 }
+
+//	do we have to define tab behaviour?

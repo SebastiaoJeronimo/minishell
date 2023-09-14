@@ -6,14 +6,14 @@
 #    By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 16:21:22 by scosta-j          #+#    #+#              #
-#    Updated: 2023/09/13 21:10:32 by rvaz             ###   ########.fr        #
+#    Updated: 2023/09/14 14:05:58 by rvaz             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 .SILENT:
 NAME		=	minishell
 CC			=	cc
-CFLAGS		=	-Wall -Wextra -Werror #-g -fsanitize=address 
+CFLAGS		=	-Wall -Wextra -Werror -g -fsanitize=address 
 LIBFLAGS	=	-L$(LIBFT_PATH) -lft -lreadline 
 RM			=	/bin/rm -f
 INCLUDES	=	./include
