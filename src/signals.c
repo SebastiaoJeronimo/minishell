@@ -6,14 +6,13 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:56:23 by rvaz              #+#    #+#             */
-/*   Updated: 2023/09/14 16:27:39 by rvaz             ###   ########.fr       */
+/*   Updated: 2023/09/15 16:15:25 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 #include <sys/types.h>
 #include <signal.h>
-#include <termios.h>
 
 /**
  * 	Work in progress
@@ -38,7 +37,7 @@ static void	sighandler(int signal)
 /**
  * @brief defines signal behaviour
 */
-void	set_signals()
+void	set_signals(void)
 {
 	struct sigaction	sig_c;
 	struct sigaction	sig_d;

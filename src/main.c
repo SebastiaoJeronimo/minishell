@@ -23,7 +23,7 @@ t_shell	*get_structure(void)
 }
 
 /**
- * @brief free all memory alocated to the t_shell struct
+ * @brief free all alocated memory on the t_shell struct
 */
 static void	free_env(t_shell *shell)
 {
@@ -72,12 +72,19 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		set_signals();
+		//insert user from env to prompt
 		prompt = readline("$>");
 		if (prompt && *prompt)
 			add_history(prompt);
-		if (prompt)
+		if (!prompt)
 		{
-			unset(NULL);
+			printf("exit\n");
+			exit(0); // free
+		}
+		else
+		{
+			cd(prompt);
+			pwd();
 			free(prompt);
 		}
 	}
