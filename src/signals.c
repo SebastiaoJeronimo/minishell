@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:56:23 by rvaz              #+#    #+#             */
-/*   Updated: 2023/09/15 16:15:25 by rvaz             ###   ########.fr       */
+/*   Updated: 2023/09/15 17:59:26 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 
 /**
  * 	Work in progress
- * 	CTRL + C = SIGINT (Partialy done)
- * 	CTRL + \ = SIGQUIT (Done)
- * 	CTRL + D = EOF (Missing)
+ * 	CTRL + C = SIGINT
+ * 	CTRL + \ = SIGQUIT
+ * 	CTRL + D = EOF
 **/
 static void	sighandler(int signal)
 {
@@ -26,10 +26,9 @@ static void	sighandler(int signal)
 	if (signal == SIGINT)
 	{
 		write(1, "\n", 1);
-		// rl_replace_line("", 0);
-		// rl_on_new_line();
-		// rl_redisplay();
-		exit(0);
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
 		return ;
 	}
 	
@@ -41,7 +40,10 @@ void	set_signals(void)
 {
 	struct sigaction	sig_c;
 	struct sigaction	sig_d;
+	sigset_t			block_mask;
 
+	sigemptyset(&sig_c.sa_mask);
+	sigemptyset(&sig_d.sa_mask);
 	sig_c.sa_handler = sighandler;
 	sig_d.sa_handler = SIG_IGN;
 	sigaction(SIGINT, &sig_c, NULL);
