@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 13:42:26 by scosta-j          #+#    #+#             */
-/*   Updated: 2023/09/15 16:15:27 by rvaz             ###   ########.fr       */
+/*   Updated: 2023/09/15 18:01:10 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,28 +54,3 @@ char	*find_env_var(char *arg, int flag)
 	free(var);
 	return (NULL);
 }
-
-// remove_env_var(char *str)
-// {
-
-// }
-
-// add_env_var(char *str)
-// {
-
-// }
-
-// update_env_var(char *var, char *value)
-// {
-
-// }
-
-// adjust_env(void)
-// {
-
-// }
-
-// realloc_env(void)
-// {
-
-// }

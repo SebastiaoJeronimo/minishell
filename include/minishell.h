@@ -81,6 +81,6 @@ char	*find_env_var(char *arg, int flag);
 // remove_env_var(char *str);
 // add_env_var(char *str);
 // update_env_var(char *str, char *str);
-// realloc_env(void);
+// alloc_env(void);
 
 #endif
