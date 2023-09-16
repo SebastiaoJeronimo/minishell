@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:56:23 by rvaz              #+#    #+#             */
-/*   Updated: 2023/09/15 17:59:26 by rvaz             ###   ########.fr       */
+/*   Updated: 2023/09/16 13:50:36 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	set_signals(void)
 	struct sigaction	sig_d;
 	sigset_t			block_mask;
 
+	(void)block_mask;  //may not be needed
 	sigemptyset(&sig_c.sa_mask);
 	sigemptyset(&sig_d.sa_mask);
 	sig_c.sa_handler = sighandler;

@@ -13,6 +13,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# define _XOPEN_SOURCE 700							// Dunno what this is but now sigaction works on my home pc
 # include "../lib/libft/libft.h"
 # include <unistd.h>
 # include <stdlib.h>
@@ -24,11 +25,11 @@
 # define STDOUT 1
 # define STDERR 2
 
-typedef struct s_shell
-{
-	char	**env;									//	to save the environment variables
-	int		shell_level;							//	to save the shell_level
-}			t_shell;
+// typedef struct s_shell
+// {
+// 	char	**env;									//	to save the environment variables
+// 	int		shell_level;							//	to save the shell_level
+// }			t_envp;
 
 typedef enum bool
 {
@@ -36,29 +37,22 @@ typedef enum bool
 	true
 }	t_bool;
 
-// typedef struct s_envp
-// {
-// 	t_list				**vars;								//  [ ] pointer to var_list
-// 	char				**env_array							//	[ ] array with env
-// 	t_bool				(*init)(char **envp);				//  [ ] (F) initialize envp
-// 	t_env_var			*(*get)(char *name);				//  [ ] (F) get env var struct 
-// 	char				*(*get_value)(char *name);			//  [ ] (F) get env var value
-// 	void				(*set)(char *name, char *value);	//  [ ] (F) add var to envp
-// 	t_bool				(*unset)(char *name);				//  [ ] (F) remove var from envp
-// 	char				**(*get_env)(void);					//  [ ] (F)
-// 	void				(*print)(void);						//  [ ] (F) print all env vars
-// 	t_bool				(*is_set)(char *name);				//  [ ] (F) check if var exists
-// 	//t_env_var			*path;								//  [ ] pointer to path
-// }				t_envp;
+typedef struct s_envp
+{
+	t_env_var			*vars;								//  [ ] pointer to var_list
+	char				**env_array;						//	[ ] array with env
+	//t_bool				(*init)(char **envp);				//  [ ] (F) initialize envp
+	t_env_var			*(*get)(const char *name);				//  [ ] (F) get env var struct 
+	char				*(*get_value)(const char *name);			//  [ ] (F) get env var value
+	void				(*set)(const char *name, const char *value);	//  [ ] (F) add var to envp
+	void				(*unset)(const char *name);				//  [ ] (F) remove var from envp
+	char				**(*get_env)(void);					//  [ ] (F)
+	void				(*print)(void);						//  [ ] (F) print all env vars
+	t_bool				(*is_set)(char *name);				//  [ ] (F) check if var exists
+	//t_env_var			*path;								//  [ ] pointer to path
+}				t_envp;
 
-// typedef struct s_env_var
-// {
-// 	char				*name;								//  env var name
-// 	char				*value;								//	env var value
-// 	struct s_env_var	*next;								//	pointer to next env var
-// }			t_env_var;
-
-t_shell	*get_structure(void);
+t_envp	*get_env_struct(void);
 void	set_signals(void);
 
 //	Built-ins
@@ -67,20 +61,19 @@ void	cd(char *path);
 void	echo(char *arg);
 void	print_env(void);
 void	exit_shell(int exit_code);
-void	export(void);
+void	export(char *str);
 void	pwd(void);
 void	unset(char *arg);
 void	pwd(void);
 
 //	Utils
 
-char	*find_env_var(char *arg, int flag);
+//	_encv.c
 
-//	TODO
-
-// remove_env_var(char *str);
-// add_env_var(char *str);
-// update_env_var(char *str, char *str);
-// alloc_env(void);
+void		init_env(char **envp);
+void		unset_env_var(const char *name);
+void		set_env_var(const char *name, const char *value);
+t_env_var	*get_env_var(const char *str);
+char		*get_env_var_value(const char *str);
 
 #endif

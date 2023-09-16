@@ -3,18 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 12:44:29 by scosta-j          #+#    #+#             */
-/*   Updated: 2023/09/15 16:15:27 by rvaz             ###   ########.fr       */
+/*   Updated: 2023/09/16 17:35:20 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	cd_return(int r, char *path)
+void	cd_return(int r)
 {
-	(void)path;
 	// update_env_var("PWD", path);
 	if (r < 0) // Fix this
 		perror("insert error message here");
@@ -22,24 +21,43 @@ void	cd_return(int r, char *path)
 
 /**
  * @brief change the working directory
- * @return on sucess, 0 is returned. On error, -1 is returned.
 */
 void	cd(char *path)
 {
 	int		r;
 	char	*home;
-	
+	t_envp	*shell;
+
+	shell = get_env_struct();
+	home = shell->get_value("HOME");
 	r = -1;
 	if (!path)
 	{
-		home = find_env_var("HOME", 1);
 		r = chdir(home);
-		cd_return(r, home);
+		// shell->set("OLDPWD", shell->get_value("PWD"));
+		// shell->set("PWD", home);
+		cd_return(r);
+		return ;
 	}
 	if (!*path)
 		return ;
-	r = chdir(path);
-	cd_return(r, path);
+	if (*path == '~')
+	{
+		path = ft_strjoin(home, path + 1);
+		r = chdir(path);
+		// shell->set("OLDPWD", shell->get_value("PWD"));
+		// shell->set("PWD", path);
+		free(path);
+		cd_return(r);
+		return ;
+	}
+	else
+	{
+		r = chdir(path);
+		cd_return(r);
+		return ;
+	}
+	perror("insert error message here");
 }
 
-//	do we have to define tab behaviour?
+//	do we have to define tab key behaviour?

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:28:29 by rvaz              #+#    #+#             */
-/*   Updated: 2023/09/14 19:56:56 by rvaz             ###   ########.fr       */
+/*   Updated: 2023/09/16 17:08:44 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,5 @@ void	exit_shell(int exit_code)
 {
 	int i = exit_code;
 	(void)i;
+	exit(exit_code);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:08:37 by rvaz              #+#    #+#             */
-/*   Updated: 2023/09/15 18:01:11 by rvaz             ###   ########.fr       */
+/*   Updated: 2023/09/16 17:12:28 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,16 @@
 /**
  *	@brief print enviroment variables
 */
-void	print_env()
+void	print_env(void)
 {
-	int i;
+	t_envp		*shell;
+	t_env_var	*current;
 
-	i = 0;
-	while (get_structure()->env[i])
-		printf("%s\n", get_structure()->env[i++]);
+	shell = get_env_struct();
+	current = shell->vars;
+	while (current)
+	{
+		printf("%s\n", current->content);
+		current = current->next;
+	}
 }

@@ -13,53 +13,67 @@
 #include "../include/minishell.h"
 
 /**
- * @brief returns a pointer to the static shell struct
+ * @brief free all alocated memory on the t_envp struct
 */
-t_shell	*get_structure(void)
-{
-	static t_shell	shell;
+// static void	free_env(t_envp *shell)
+// {
+// 	int		i;
 
-	return (&shell);
-}
-
-/**
- * @brief free all alocated memory on the t_shell struct
-*/
-static void	free_env(t_shell *shell)
-{
-	int		i;
-
-	i = 0;
-	if (!shell->env)
-		return ;
-	while (shell->env[i])
-		free(shell->env[i++]);
-	free(shell->env);
-}
+// 	i = 0;
+// 	if (!shell->env)
+// 		return ;
+// 	while (shell->env[i])
+// 		free(shell->env[i++]);
+// 	free(shell->env);
+// }
 
 /**
  * @brief allocates envp to the static shell struct
 */
-static void	initialize_shell(int argc, char **envp)
-{
-	int		i;
-	int		j;
+// static void	initialize_shell(int argc, char **envp)
+// {
+// 	int		i;
+// 	int		j;
 
-	i = 0;
-	j = 0;
-	if (argc != 1)
-		exit(0);
-	while (envp[i])
-		i++;
-	get_structure()->env = malloc((i + 1) * sizeof(char *)); //checkar malloc
-	if (!get_structure()->env)
-		exit(0); //free
-	while (j < i)
+// 	i = 0;
+// 	j = 0;
+// 	while (envp[i])
+// 		i++;
+// 	get_env_struct()->env = malloc((i + 1) * sizeof(char *)); //checkar malloc
+// 	if (!get_env_struct()->env)
+// 		exit(0); //free
+// 	while (j < i)
+// 	{
+// 		get_env_struct()->env[j] = ft_strdup(envp[j]);
+// 		j++;
+// 	}
+// 	get_env_struct()->env[j] = NULL;
+// }
+
+/**
+ * THIS IS FOR TESTING PURPOSES ONLY
+*/
+void	simple_prompt_checker(char *prompt)
+{
+	if (ft_strncmp(prompt, "exit", 4) == 0)
+		exit_shell(0);
+	else if (ft_strncmp(prompt, "env", 3) == 0)
+		print_env();
+	else if (ft_strncmp(prompt, "pwd", 3) == 0)
+		pwd();
+	else if (ft_strncmp(prompt, "cd", 2) == 0)
 	{
-		get_structure()->env[j] = ft_strdup(envp[j]);
-		j++;
+		if(ft_strlen(prompt) > 2)
+			cd(prompt + 3);
+		else
+			cd("");
 	}
-	get_structure()->env[j] = NULL;
+	else if (ft_strncmp(prompt, "echo", 4) == 0)
+		echo("");
+	else if (ft_strncmp(prompt, "export ", 7) == 0)
+		export(prompt + 7);
+	else if (ft_strncmp(prompt, "unset", 5) == 0)
+		unset("");
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -67,12 +81,15 @@ int	main(int argc, char **argv, char **envp)
 	char	*prompt;
 
 	(void)argv;
+	if (argc != 1)
+		exit(0);
 	prompt = NULL;
-	initialize_shell(argc, envp);
+	init_env(envp);
+	//initialize_shell(envp);
 	while (1)
 	{
 		set_signals();
-		//insert user from env to prompt
+		//add env_var "LOGNAME" to the prompt
 		prompt = readline("$>");
 		if (prompt && *prompt)
 			add_history(prompt);
@@ -83,11 +100,10 @@ int	main(int argc, char **argv, char **envp)
 		}
 		else
 		{
-			cd(prompt);
-			pwd();
+			simple_prompt_checker(prompt);
 			free(prompt);
 		}
 	}
-	free_env(get_structure());
+	//free_env(get_env_struct());
 	rl_clear_history();
 }
