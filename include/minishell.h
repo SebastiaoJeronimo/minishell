@@ -25,12 +25,6 @@
 # define STDOUT 1
 # define STDERR 2
 
-// typedef struct s_shell
-// {
-// 	char	**env;									//	to save the environment variables
-// 	int		shell_level;							//	to save the shell_level
-// }			t_envp;
-
 typedef enum bool
 {
 	false,
@@ -39,17 +33,16 @@ typedef enum bool
 
 typedef struct s_envp
 {
-	t_env_var			*vars;								//  [ ] pointer to var_list
-	char				**env_array;						//	[ ] array with env
-	//t_bool				(*init)(char **envp);				//  [ ] (F) initialize envp
-	t_env_var			*(*get)(const char *name);				//  [ ] (F) get env var struct 
-	char				*(*get_value)(const char *name);			//  [ ] (F) get env var value
-	void				(*set)(const char *name, const char *value);	//  [ ] (F) add var to envp
-	void				(*unset)(const char *name);				//  [ ] (F) remove var from envp
-	char				**(*get_env)(void);					//  [ ] (F)
-	void				(*print)(void);						//  [ ] (F) print all env vars
-	t_bool				(*is_set)(char *name);				//  [ ] (F) check if var exists
-	//t_env_var			*path;								//  [ ] pointer to path
+	t_env_var			*vars;											//  [x] pointer to var_list
+	char				**env_array;									//	[ ] array with env
+	t_env_var			*(*get)(const char *name);						//  [x] (F) get env var struct 
+	char				*(*get_value)(const char *name);				//  [x] (F) get env var value
+	void				(*set)(const char *name, const char *value);	//  [x] (F) add var to envp
+	void				(*unset)(const char *name);						//  [ ] (F) remove var from envp
+	char				**(*get_env)(void);								//  [ ] (F)
+	void				(*print)(void);									//  [x] (F) print all env vars
+	t_bool				(*is_set)(char *name);							//  [ ] (F) check if var exists
+	//t_env_var			*path;											//  [ ] pointer to path
 }				t_envp;
 
 t_envp	*get_env_struct(void);
