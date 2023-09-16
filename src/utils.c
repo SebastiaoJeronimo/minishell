@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 13:42:26 by scosta-j          #+#    #+#             */
-/*   Updated: 2023/09/14 16:01:08 by rvaz             ###   ########.fr       */
+/*   Updated: 2023/09/15 16:15:27 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,18 @@
 /**
  * @brief looks for a env variable and returns it
  * @param arg the variable to find
- * @return the variable and its componnents, NULL if can't find
+ * @param flag if 0, the returned pointer includes the variable name, if 1 it doesn't
+ * @return pointer to the env variable, NULL if can't find
  * @example find_env_var("PATH");
 */
-char *find_env_var(char *arg)
+char	*find_env_var(char *arg, int flag)
 {
+	t_shell	*shell;
 	int		i;
 	char	*var;
 	int		var_len;
 
+	shell = get_structure();
 	i = 0;
 	if (!arg)
 		return (NULL);
@@ -31,15 +34,48 @@ char *find_env_var(char *arg)
 	if (!var)
 		return (NULL);
 	var_len = ft_strlen(var);
-	while (get_structure()->env[i])
+	while (shell->env[i])
 	{
-		if (!ft_strncmp(var, get_structure()->env[i], var_len))
+		if (!ft_strncmp(var, shell->env[i], var_len))
 		{
-			free(var);
-			return (get_structure()->env[i] + var_len);
+			if (!flag)
+			{
+				free(var);
+				return (shell->env[i]);
+			}
+			else
+			{
+				free(var);
+				return (shell->env[i] + var_len);
+			}
 		}
 		i++;
 	}
 	free(var);
 	return (NULL);
 }
+
+// remove_env_var(char *str)
+// {
+
+// }
+
+// add_env_var(char *str)
+// {
+
+// }
+
+// update_env_var(char *var, char *value)
+// {
+
+// }
+
+// adjust_env(void)
+// {
+
+// }
+
+// realloc_env(void)
+// {
+
+// }
