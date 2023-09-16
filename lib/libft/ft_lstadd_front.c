@@ -6,13 +6,13 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 23:13:41 by rvaz              #+#    #+#             */
-/*   Updated: 2023/04/18 23:23:10 by rvaz             ###   ########.fr       */
+/*   Updated: 2023/09/16 12:08:45 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_front(t_list **lst, t_list *new)
+void	ft_lstadd_front(t_env_var **lst, t_env_var *new)
 {
 	new->next = *lst;
 	*lst = new;

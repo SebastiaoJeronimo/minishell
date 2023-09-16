@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 16:31:58 by rvaz              #+#    #+#             */
-/*   Updated: 2023/07/08 21:30:24 by rvaz             ###   ########.fr       */
+/*   Updated: 2023/09/16 15:14:52 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,12 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-typedef struct s_list
+typedef struct s_env_var
 {
-	void			*content;
-	struct s_list	*next;
-}	t_list;
+	char				*content;
+	struct s_env_var	*next;
+	struct s_env_var	*previous;
+}	t_env_var;
 
 //	Part 1 - Libc functions
 int		ft_atoi(const char *nptr);
@@ -62,14 +63,14 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 size_t	ft_strlen(const char *str);
 
 //	Part 3 - Bonus Functions
-t_list	*ft_lstnew(void *content);
-void	ft_lstadd_front(t_list **lst, t_list *new);
-int		ft_lstsize(t_list *lst);
-t_list	*ft_lstlast(t_list *lst);
-void	ft_lstadd_back(t_list **lst, t_list *new);
-void	ft_lstdelone(t_list *lst, void (*del)(void*));
-void	ft_lstclear(t_list **lst, void (*del)(void*));
-void	ft_lstiter(t_list *lst, void (*f)(void *));
-t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+t_env_var	*ft_lstnew(void *content);
+void		ft_lstadd_front(t_env_var **lst, t_env_var *new);
+int			ft_lstsize(t_env_var *lst);
+t_env_var	*ft_lstlast(t_env_var *lst);
+void		ft_lstadd_back(t_env_var **lst, t_env_var *new);
+void		ft_lstdelone(t_env_var *lst, void (*del)(void*));
+void		ft_lstclear(t_env_var **lst, void (*del)(void*));
+void		ft_lstiter(t_env_var *lst, void (*f)(void *));
+t_env_var	*ft_lstmap(t_env_var *lst, void *(*f)(void *), void (*del)(void *));
 
 #endif

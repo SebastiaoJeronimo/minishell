@@ -6,16 +6,16 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 01:42:06 by rvaz              #+#    #+#             */
-/*   Updated: 2023/04/19 02:10:57 by rvaz             ###   ########.fr       */
+/*   Updated: 2023/09/16 12:08:45 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
+t_env_var	*ft_lstmap(t_env_var *lst, void *(*f)(void *), void (*del)(void *))
 {
-	t_list	*new;
-	t_list	*tmp;
+	t_env_var	*new;
+	t_env_var	*tmp;
 
 	if (!lst)
 		return (NULL);
