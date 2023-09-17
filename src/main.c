@@ -76,7 +76,7 @@ int	main(int argc, char **argv, char **envp)
 		prompt = readline("$>");
 		if (prompt && *prompt)
 			add_history(prompt);
-		if (!prompt)
+		if (!prompt) //check this leak
 		{
 			printf("exit\n");
 			exit(0); // free
