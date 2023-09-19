@@ -42,6 +42,8 @@ typedef struct s_envp
 	char				**(*get_env)(void);								//  [ ] (F)
 	void				(*print)(void);									//  [x] (F) print all env vars
 	t_bool				(*is_set)(char *name);							//  [ ] (F) check if var exists
+	void				(*destroy)();									//	[ ] (F) properly frees everything
+																		//			that was allocated
 	//t_env_var			*path;											//  [ ] pointer to path
 }				t_envp;
 
@@ -64,9 +66,11 @@ void	pwd(void);
 //	_encv.c
 
 void		init_env(char **envp);
+void		destroy_env();
 void		unset_env_var(const char *name);
 void		set_env_var(const char *name, const char *value);
 t_env_var	*get_env_var(const char *str);
 char		*get_env_var_value(const char *str);
+void		destroy_env_array();
 
 #endif

@@ -39,7 +39,7 @@
 // 	j = 0;
 // 	while (envp[i])
 // 		i++;
-// 	get_env_struct()->env = malloc((i + 1) * sizeof(char *)); //checkar malloc
+// 	get_env_struct()->env = malloc((i + 1) * sizeof(c	//free_env(get_env_struct());har *)); //checkar malloc
 // 	if (!get_env_struct()->env)
 // 		exit(0); //free
 // 	while (j < i)
@@ -94,16 +94,16 @@ int	main(int argc, char **argv, char **envp)
 		if (prompt && *prompt)
 			add_history(prompt);
 		if (!prompt)
-		{
-			printf("exit\n");
-			exit(0); // free
-		}
+			break ;
 		else
 		{
 			simple_prompt_checker(prompt);
 			free(prompt);
 		}
 	}
-	//free_env(get_env_struct());
-	rl_clear_history();
+	printf("exit\n");
+	destroy_env();
+	exit(0); // free
+
+	//rl_clear_history();				is this needed?
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 12:44:29 by scosta-j          #+#    #+#             */
-/*   Updated: 2023/09/16 17:35:20 by rvaz             ###   ########.fr       */
+/*   Updated: 2023/09/19 15:33:16 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	cd(char *path)
 		r = chdir(home);
 		// shell->set("OLDPWD", shell->get_value("PWD"));
 		// shell->set("PWD", home);
+		shell->set("PWD", home);
 		cd_return(r);
 		return ;
 	}
@@ -46,7 +47,7 @@ void	cd(char *path)
 		path = ft_strjoin(home, path + 1);
 		r = chdir(path);
 		// shell->set("OLDPWD", shell->get_value("PWD"));
-		// shell->set("PWD", path);
+		shell->set("PWD", path);
 		free(path);
 		cd_return(r);
 		return ;
@@ -54,6 +55,7 @@ void	cd(char *path)
 	else
 	{
 		r = chdir(path);
+		shell->set("PWD", path);
 		cd_return(r);
 		return ;
 	}
