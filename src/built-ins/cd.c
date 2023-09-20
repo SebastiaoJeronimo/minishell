@@ -6,18 +6,11 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 12:44:29 by scosta-j          #+#    #+#             */
-/*   Updated: 2023/09/19 15:33:16 by rvaz             ###   ########.fr       */
+/*   Updated: 2023/09/20 20:57:38 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-void	cd_return(int r)
-{
-	// update_env_var("PWD", path);
-	if (r < 0) // Fix this
-		perror("insert error message here");
-}
 
 /**
  * @brief change the working directory
@@ -33,33 +26,44 @@ void	cd(char *path)
 	r = -1;
 	if (!path)
 	{
+		if (!home)
+			return ;
 		r = chdir(home);
-		// shell->set("OLDPWD", shell->get_value("PWD"));
-		// shell->set("PWD", home);
-		shell->set("PWD", home);
-		cd_return(r);
-		return ;
 	}
-	if (!*path)
+	else if (!*path)
 		return ;
-	if (*path == '~')
-	{
-		path = ft_strjoin(home, path + 1);
-		r = chdir(path);
-		// shell->set("OLDPWD", shell->get_value("PWD"));
-		shell->set("PWD", path);
-		free(path);
-		cd_return(r);
-		return ;
-	}
+	// else if (*path == '~')
+	// {
+	// 	path = ft_strjoin(home, path + 1);
+	// 	r = chdir(path);
+	// 	free(path);
+	// 	if (r < 0)
+	// 		perror("insert error message here");
+	// }
 	else
-	{
 		r = chdir(path);
-		shell->set("PWD", path);
-		cd_return(r);
+	if (r < 0)
+	{
+		perror(""); // how do i make this work properly?
 		return ;
 	}
-	perror("insert error message here");
+	set_pwd(1);
 }
 
 //	do we have to define tab key behaviour?
+
+/**
+ * 	CD =============================
+ * 
+ * 	No args				->	cd to home				DONE
+ * 	Empty args			->	do nothing				DONE
+ *  Args 				->	cd to arg				DONE
+ *	Args.Arg not found	->	error					NOT SIMILAR
+ * 	
+ * 
+ *  HOME not set		->	"~" Doesn't work & no args does nothing
+ * 	PWD/OLDPWD not set	->	everything works normally when changing
+ * 							directories always updates PWD/OLDPWD
+ *  
+ *	ATM OLDPWD is not being updated
+*/

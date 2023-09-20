@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 23:57:46 by rvaz              #+#    #+#             */
-/*   Updated: 2023/09/16 13:02:07 by rvaz             ###   ########.fr       */
+/*   Updated: 2023/09/20 18:34:27 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,13 @@ void	ft_lstadd_back(t_env_var **lst, t_env_var *new)
 {
 	t_env_var	*last;
 
+	if (!new)
+		return ;
+	new->next = NULL;
 	if (!*lst)
 	{
 		*lst = new;
+		new->previous = NULL;
 		return ;
 	}
 	else

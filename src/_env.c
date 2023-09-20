@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 17:35:44 by rvaz              #+#    #+#             */
-/*   Updated: 2023/09/19 16:16:48 by rvaz             ###   ########.fr       */
+/*   Updated: 2023/09/20 19:30:12 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	create_env_list(char **envp)
 		ft_lstadd_back(&shell->vars, ft_lstnew(strdup(envp[i])));
 }
 
-void	create_env_array()
+char	**create_env_array()
 {
 	t_envp		*shell;
 	t_env_var	*tmp;
@@ -48,8 +48,8 @@ void	create_env_array()
 	int			i;
 
 	shell = get_env_struct();
-	if (shell->vars)
-		return ;
+	if (!shell->vars)
+		return (NULL);
 	tmp = shell->vars;
 	i = 0;
 	env_len = ft_lstsize(shell->vars);
@@ -65,6 +65,7 @@ void	create_env_array()
 		i++;
 	}
 	shell->env_array[i] = NULL;
+	return (shell->env_array);
 }
 
 void	destroy_env_array()
@@ -91,10 +92,11 @@ void	init_env(char **envp)
 
 	shell = get_env_struct();
 	shell->env_array = NULL;
+	shell->make_array = create_env_array;
 	shell->get = get_env_var;
 	shell->get_value = get_env_var_value;
-	shell->set = set_env_var;
-	shell->unset = unset_env_var;
+	shell->set = export;
+	shell->unset = unset;
 	shell->print = print_env;
 	shell->destroy = destroy_env;
 
@@ -111,68 +113,8 @@ void	destroy_env()
 	shell = get_env_struct();
 	if (shell->vars)
 		ft_lstclear(&shell->vars, free);
-	// if (shell->env_array)
-	// 	destroy_env_array();
-	}
-
-
-/**
- * @brief unsets the env variable given
- * @param name the variable to unset
- * @example unset_env_var("PATH");
-*/
-void	unset_env_var(const char *name)
-{
-	t_envp		*shell;
-	t_env_var	*current;
-	char		*var_name;
-
-	shell = get_env_struct();
-	if (!name || !shell->vars)
-		return ;
-	current = shell->vars;
-	var_name = ft_strjoin(name, "=");
-	if (!var_name)
-		return ;
-	while (current)
-	{
-		if (!ft_strncmp(var_name, current->content, ft_strlen(var_name)))
-		{
-			current->previous->next = current->next;
-			if (current->next)
-				current->next->previous = current->previous;
-			ft_lstdelone(current, free);
-			return ;
-		}
-		current = current->next;
-	}
-}
-
-/**
- * @brief sets the env variable given
- * @param name the variable to set
- * @example set_env_var("PATH", "/bin:/usr/bin");
-*/
-void	set_env_var(const char *name, const char *value)
-{
-	t_envp		*shell;
-	t_env_var	*current;
-	char 		*var_name;
-
-	if (!name || !value)
-		return ;
-	shell = get_env_struct();
-	current = get_env_var(name);
-	var_name = ft_strjoin(name, "=");
-	if (!current)
-		ft_lstadd_back(&shell->vars, ft_lstnew(ft_strjoin(var_name, value)));
-	else
-	{
-		free(current->content);
-		current->content = ft_strjoin(var_name, value);
-	}
-	free(var_name);
-	//  do nothing if var and value are the same as existing one
+	if (shell->env_array)
+		destroy_env_array();
 }
 
 /**
@@ -219,7 +161,7 @@ char	*get_env_var_value(const char *str)
 	char	*var;
 
 	i = 0;
-	if (!str)
+	if (!str || !get_env_var(str))
 		return (NULL);
 	var = get_env_var(str)->content;
 	if (!var)

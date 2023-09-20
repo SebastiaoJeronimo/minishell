@@ -27,24 +27,22 @@
 
 typedef enum bool
 {
-	false,
-	true
+	FALSE,
+	TRUE
 }	t_bool;
 
 typedef struct s_envp
 {
-	t_env_var			*vars;											//  [x] pointer to var_list
-	char				**env_array;									//	[ ] array with env
-	t_env_var			*(*get)(const char *name);						//  [x] (F) get env var struct 
-	char				*(*get_value)(const char *name);				//  [x] (F) get env var value
-	void				(*set)(const char *name, const char *value);	//  [x] (F) add var to envp
-	void				(*unset)(const char *name);						//  [ ] (F) remove var from envp
-	char				**(*get_env)(void);								//  [ ] (F)
-	void				(*print)(void);									//  [x] (F) print all env vars
-	t_bool				(*is_set)(char *name);							//  [ ] (F) check if var exists
-	void				(*destroy)();									//	[ ] (F) properly frees everything
-																		//			that was allocated
-	//t_env_var			*path;											//  [ ] pointer to path
+	t_env_var			*vars;								//  [x] pointer to var_list
+	char				**env_array;						//	[x] array with env
+	t_env_var			*(*get)(const char *name);			//  [x] (F) get env var struct 
+	char				**(*make_array)(void);				//  [x] (F) create env var array
+	char				*(*get_value)(const char *name);	//  [x] (F) get env var value
+	void				(*set)(const char *str);			//  [x] (F) add var to envp
+	void				(*unset)(const char *name);			//  [x] (F) remove var from envp
+	void				(*print)(void);						//  [x] (F) print all env vars
+	void				(*destroy)();						//	[x] (F) properly frees everything
+															//			that was allocated
 }				t_envp;
 
 t_envp	*get_env_struct(void);
@@ -56,21 +54,22 @@ void	cd(char *path);
 void	echo(char *arg);
 void	print_env(void);
 void	exit_shell(int exit_code);
-void	export(char *str);
+void	export(const char *str);
 void	pwd(void);
-void	unset(char *arg);
+void	unset(const char *str);
 void	pwd(void);
 
 //	Utils
+
+t_bool	var_name_check(const char *str);
 
 //	_encv.c
 
 void		init_env(char **envp);
 void		destroy_env();
-void		unset_env_var(const char *name);
-void		set_env_var(const char *name, const char *value);
 t_env_var	*get_env_var(const char *str);
 char		*get_env_var_value(const char *str);
+char		**create_env_array();
 void		destroy_env_array();
 
 #endif

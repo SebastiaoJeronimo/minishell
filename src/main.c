@@ -13,44 +13,6 @@
 #include "../include/minishell.h"
 
 /**
- * @brief free all alocated memory on the t_envp struct
-*/
-// static void	free_env(t_envp *shell)
-// {
-// 	int		i;
-
-// 	i = 0;
-// 	if (!shell->env)
-// 		return ;
-// 	while (shell->env[i])
-// 		free(shell->env[i++]);
-// 	free(shell->env);
-// }
-
-/**
- * @brief allocates envp to the static shell struct
-*/
-// static void	initialize_shell(int argc, char **envp)
-// {
-// 	int		i;
-// 	int		j;
-
-// 	i = 0;
-// 	j = 0;
-// 	while (envp[i])
-// 		i++;
-// 	get_env_struct()->env = malloc((i + 1) * sizeof(c	//free_env(get_env_struct());har *)); //checkar malloc
-// 	if (!get_env_struct()->env)
-// 		exit(0); //free
-// 	while (j < i)
-// 	{
-// 		get_env_struct()->env[j] = ft_strdup(envp[j]);
-// 		j++;
-// 	}
-// 	get_env_struct()->env[j] = NULL;
-// }
-
-/**
  * THIS IS FOR TESTING PURPOSES ONLY
 */
 void	simple_prompt_checker(char *prompt)
@@ -66,14 +28,14 @@ void	simple_prompt_checker(char *prompt)
 		if(ft_strlen(prompt) > 2)
 			cd(prompt + 3);
 		else
-			cd("");
+			cd(NULL);
 	}
 	else if (ft_strncmp(prompt, "echo", 4) == 0)
 		echo("");
 	else if (ft_strncmp(prompt, "export ", 7) == 0)
 		export(prompt + 7);
-	else if (ft_strncmp(prompt, "unset", 5) == 0)
-		unset("");
+	else if (ft_strncmp(prompt, "unset ", 5) == 0)
+		unset(prompt + 6);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -85,7 +47,6 @@ int	main(int argc, char **argv, char **envp)
 		exit(0);
 	prompt = NULL;
 	init_env(envp);
-	//initialize_shell(envp);
 	while (1)
 	{
 		set_signals();
