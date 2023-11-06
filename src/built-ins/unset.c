@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:28:39 by rvaz              #+#    #+#             */
-/*   Updated: 2023/09/20 20:27:47 by rvaz             ###   ########.fr       */
+/*   Updated: 2023/09/21 14:00:54 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	unset(const char *str)
 /**
  * UNSET =============================
  * 
- * [error case]	"bash: unset: `OLDPWDf.': not a valid identifier"
+ * [error case]	"bash: unset: `whatever': not a valid identifier"
  * 		when the variable name is not valid, but if the variable name is valid
  * 		and it doesn't exist, do nothing and print nothing
 */

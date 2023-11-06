@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 17:35:44 by rvaz              #+#    #+#             */
-/*   Updated: 2023/09/20 19:30:12 by rvaz             ###   ########.fr       */
+/*   Updated: 2023/09/28 14:36:40 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ void	init_env(char **envp)
 	shell->set = export;
 	shell->unset = unset;
 	shell->print = print_env;
+	shell->print_alpha = export_sort_print;
 	shell->destroy = destroy_env;
 
 	create_env_list(envp);
