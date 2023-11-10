@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 13:18:31 by rvaz              #+#    #+#             */
-/*   Updated: 2023/11/06 21:30:12 by rvaz             ###   ########.fr       */
+/*   Updated: 2023/11/10 16:38:29 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,74 +43,87 @@ int	quote_check(const char *str)
 	return (squote + (dquote * 2));
 }
 
-char *prompt_trim(const char *prompt)
+/**
+ * @brief	removes extra spaces between arguments leaving only one where
+ * 			there are more than one, leaving the spaces inside " or ' intact
+*/
+char	*space_trim(const char *prompt)
 {
 	int	i;
 	int	j;
-	char *trim;
 	char *tmp;
-	char *new_prompt;
 	
 	i = 0;
 	j = 0;
-	trim = ft_strtrim(prompt, " ");
-	tmp = ft_calloc(ft_strlen(trim) + 1, 1);
-	while (trim[i])
+	tmp = ft_calloc(ft_strlen(prompt) + 1, 1);
+	while (prompt[i])
 	{
-		while (trim[i] && trim[i] != '\"' && trim[i] != '\'' 
-				&& trim[i] != ' ')
-			tmp[j++] = trim[i++];
-		if (trim[i] && trim[i] == '\"')
+		while (prompt[i] && prompt[i] != '\"' && prompt[i] != '\'' 
+				&& prompt[i] != ' ')
+			tmp[j++] = prompt[i++];
+		if (prompt[i] && prompt[i] == '\"')
 		{
-			i++;
-			while (trim[i] && trim[i] != '\"')
-				tmp[j++] = trim[i++];
+			tmp[j++] = prompt[i++];
+			while (prompt[i] && prompt[i] != '\"')
+				tmp[j++] = prompt[i++];
 		}
-		else if (trim[i] && trim[i] == '\'')
+		else if (prompt[i] && prompt[i] == '\'')
 		{
-			i++;
-			while (trim[i] && trim[i] != '\'')
-				tmp[j++] = trim[i++];
+			tmp[j++] = prompt[i++];
+			while (prompt[i] && prompt[i] != '\'')
+				tmp[j++] = prompt[i++];
 		}
-		if(trim[i] == '\"' || trim[i] == '\'')
-			i++;
-		if (trim[i] && trim[i++] == ' ')
-			tmp[j++] = ' ';
-		while(trim[i] && trim[i] == ' ')
+		if (prompt[i] && (prompt[i] == '\"' || prompt[i] == '\'' 
+				|| prompt[i] == ' '))
+			tmp[j++] = prompt[i++];
+		while (prompt[i] && prompt[i] == ' ')
 			i++;
 	}
 	tmp[j] = '\0';
-	new_prompt = ft_strdup(tmp);
-	printf("%s\n", new_prompt);
-	free(trim);
-	free(tmp);
-	return (new_prompt);
+	printf("%s\n", tmp);
+	return (tmp);
 }
 
 int	prompt_reader(const char *prompt)
 {
+	char *trim;
 	char *new_prompt;
 	t_prompt *prompt_list;
-	
+
+	if (!prompt)
+		return (0);
 	(void)prompt_list;
 	if (quote_check(prompt))
 	{
 		printf("error: quotes open"); // Error
-		return (0);
+		return (-1);
 	}
-	new_prompt = prompt_trim(prompt); 
-	//prompt_list = split_prompt(new_prompt); // "cd" > "Hello"
+	trim = ft_strtrim(prompt, " ");
+	new_prompt = space_trim(trim); 
+	split_prompt(new_prompt);
+	if (trim)
+		free(trim);
 	if (new_prompt)
 		free(new_prompt);
 	return (0);
 }
 
-// char *prompt_trim(char *prompt)
+// void	split_prompt(char *prompt)
 // {
-// 	int i;
+// 	int	i;
+// 	int	j;
 
-// 	while(prompt[i])
+// 	i = 0;
+// 	j = 0;
+// 	while (prompt[i] && prompt[i] != ' ')
+// 	{
+// 		while (prompt[i] && prompt[i] != '\"' && prompt[i] != '\'')
+
+// 	}
+// 	if (prompt[i])
+// 		split_prompt(prompt[i]);
 // }
+
 
 //expand // "$PWD" becomes ./path
 

@@ -29,7 +29,7 @@ void	simple_prompt_checker(char *prompt)
 		pwd();
 	else if (ft_strncmp(prompt, "cd", 2) == 0)
 	{
-		if(ft_strlen(prompt) > 2)
+		if (ft_strlen(prompt) > 2)
 			cd(prompt + 3);
 		else
 			cd(NULL);
