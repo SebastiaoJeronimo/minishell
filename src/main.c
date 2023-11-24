@@ -62,7 +62,7 @@ void	get_prompt_cursor(char **cursor)
 		*cursor = ft_strjoin(*cursor, CURSOR);
 	}
 }
-
+https://github.com/SebastiaoJeronimo/minishell/pull/1/conflicts
 int	main(int argc, char **argv, char **envp)
 {
 	char	*prompt;
