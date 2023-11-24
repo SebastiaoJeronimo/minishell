@@ -35,7 +35,7 @@ int	quote_check(const char *str)
 				squote = !squote;
 			continue ;	
 		}
-		if (squote && str[i] == '\'')
+		if (squote && str[i] == '\'') //USE TYPEDEF INSTEAD OF CHARACTERS
 			squote = !squote;
 		if (dquote && str[i] == '\"')
 			dquote = !dquote;
@@ -67,7 +67,7 @@ char	*space_trim(const char *prompt)
 			while (prompt[i] && prompt[i] != '\"')
 				tmp[j++] = prompt[i++];
 		}
-		else if (prompt[i] && prompt[i] == '\'')
+		else if (prompt[i] && prompt[i] == '\'') //USE TYPEDEF INSTEAD OF CHARACTERS
 		{
 			tmp[j++] = prompt[i++];
 			while (prompt[i] && prompt[i] != '\'')
@@ -83,6 +83,17 @@ char	*space_trim(const char *prompt)
 	printf("%s\n", tmp);
 	return (tmp);
 }
+/*
+if (prompt[i])
+	if (prompt[i] =='\''  || prompt[i] == '\"')
+	{
+		char c = prompt[i];   // FIX THIS TO MAKE IT SHORTER
+		tmp[j++] = prompt[i++];
+		while (prompt[i] && prompt[i] != c)
+			tmp[j++] = prompt[i++];
+	}
+
+*/
 
 int	prompt_reader(const char *prompt)
 {

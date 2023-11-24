@@ -62,7 +62,7 @@ void	get_prompt_cursor(char **cursor)
 		*cursor = ft_strjoin(*cursor, CURSOR);
 	}
 }
-https://github.com/SebastiaoJeronimo/minishell/pull/1/conflicts
+
 int	main(int argc, char **argv, char **envp)
 {
 	char	*prompt;
@@ -82,13 +82,13 @@ int	main(int argc, char **argv, char **envp)
 			prompt = readline(cursor);
 		else
 			prompt = readline(CURSOR);
-		if (prompt && *prompt)
+		if (prompt && *prompt) //exists and is not empty " " case
 			add_history(prompt);
 		if (!prompt)
 			break ;
 		else
 		{
-			printf("PROMPT: %d\n", prompt_reader(prompt)); //WIP
+			printf("PROMPT: %d\n", prompt_reader(prompt)); //DEBUG BEGIN HERE THE PARSING
 			//simple_prompt_checker(prompt);
 			free(prompt);
 		}
