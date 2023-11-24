@@ -6,17 +6,17 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:45:25 by rvaz              #+#    #+#             */
-/*   Updated: 2023/04/18 23:10:50 by rvaz             ###   ########.fr       */
+/*   Updated: 2023/09/16 12:08:45 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_lstnew(void *content)
+t_env_var	*ft_lstnew(void *content)
 {
-	t_list	*node;
+	t_env_var	*node;
 
-	node = (t_list *)malloc(sizeof(t_list));
+	node = (t_env_var *)malloc(sizeof(t_env_var));
 	if (!node)
 		return (NULL);
 	node->content = content;

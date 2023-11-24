@@ -13,48 +13,75 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# define _XOPEN_SOURCE 700							// Dunno what this is but now sigaction works on my home pc
 # include "../lib/libft/libft.h"
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <stdbool.h>
 
 # define STDIN 0
 # define STDOUT 1
 # define STDERR 2
 
-typedef struct s_shell
-{
-	char	**env;			//to save the environment variables
-	int		shell_level;	//to save the shell_level
-}			t_shell;
+# define CURSOR "@minishell>"
 
-t_shell	*get_structure(void);
-void	set_signals();
+typedef struct s_envp
+{
+	t_env_var			*vars;								//  [x] pointer to var_list
+	char				**env_array;						//	[x] array with env
+	t_env_var			*(*get)(const char *name);			//  [x] (F) get env var struct 
+	char				**(*make_array)(void);				//  [x] (F) create env var array
+	char				*(*get_value)(const char *name);	//  [x] (F) get env var value
+	void				(*set)(const char *str);			//  [x] (F) add var to envp
+	void				(*unset)(const char *name);			//  [x] (F) remove var from envp
+	void				(*print)(void);						//  [x] (F) print all env vars
+	void				(*print_alpha)(void);				//	[x] (F) prints variables sorted alphabetically
+	void				(*destroy)();						//	[x] (F) properly frees everything
+	
+															//			that was allocated
+}				t_envp;
+
+typedef struct		s_prompt 
+{
+	char			*str;
+	struct s_prompt	*next;
+}				t_prompt;
+
+t_envp	*get_env_struct(void);
+void	set_signals(void);
 
 //	Built-ins
 
-void	cd(char *path);
-void	echo(char *arg);
-void	print_env(void);
-void	exit_shell(int exit_code);
-void	export(void);
-void	pwd(void);
-void	unset(char *arg);
-void	pwd(void);
+void		cd(char *path);
+void		echo(char *arg);
+void		print_env(void);
+void		exit_shell(int exit_code);
+void		export(const char *str);
+void		pwd(void);
+void		unset(const char *str);
+void		pwd(void);
 
 //	Utils
 
-char *find_env_var(char *arg, int flag);
+bool		var_name_check(const char *str);
+void		lst_insert_before(t_env_var *lst, t_env_var *new);
+void		var_printcontent(void *content);
+void		export_sort_print(void);
 
-//	TODO
+//	_env.c
 
+void		init_env(char **envp);
+void		destroy_env(void);
+t_env_var	*get_env_var(const char *str);
+char		*get_env_var_value(const char *str);
+char		**create_env_array(void);
+void		destroy_env_array(void);
 
-// remove_env_var(char *str);
-// add_env_var(char *str);
-// update_env_var(char *str, char *str);
-// adjust_env(void);
-// realloc_env(void);
+//	prompt_read (WIP)
+
+int prompt_reader(const char *prompt);
 
 #endif

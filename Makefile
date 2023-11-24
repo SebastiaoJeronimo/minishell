@@ -6,7 +6,7 @@
 #    By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 16:21:22 by scosta-j          #+#    #+#              #
-#    Updated: 2023/09/14 14:05:58 by rvaz             ###   ########.fr        #
+#    Updated: 2023/11/06 14:13:08 by rvaz             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,10 +19,11 @@ RM			=	/bin/rm -f
 INCLUDES	=	./include
 LIBFT_PATH	=	./lib/libft/
 LIBFT		=	$(LIBFT_PATH)libft.a
-SRCS		=	./src/main.c  ./src/signals.c  ./src/utils.c \
+SRCS		=	./src/main.c  ./src/_env.c ./src/signals.c  ./src/utils.c \
 				./src/built-ins/pwd.c ./src/built-ins/cd.c  ./src/built-ins/echo.c \
 				./src/built-ins/env.c  ./src/built-ins/exit.c  ./src/built-ins/export.c \
-				./src/built-ins/unset.c
+				./src/built-ins/unset.c \
+				./src/prompt_read.c
 				
 CYAN		=	\033[96m
 RESET		=	\033[0m
@@ -43,9 +44,11 @@ clean:
 
 fclean: clean
 	@echo "$(TAG) Full clean." 
+	@make -C $(LIBFT_PATH) fclean
 	@$(RM) $(NAME)
 
 re: fclean all
 	@echo "$(TAG) Recompiling."
+	@make -C $(LIBFT_PATH) re
 
 .PHONY: all clean fclean re

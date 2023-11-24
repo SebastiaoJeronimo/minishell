@@ -13,81 +13,90 @@
 #include "../include/minishell.h"
 
 /**
- * @brief returns a pointer to the static shell struct
+ * THIS IS FOR TESTING PURPOSES ONLY
 */
-t_shell	*get_structure(void)
+void	simple_prompt_checker(char *prompt)
 {
-	static t_shell	shell;
-
-	return (&shell);
-}
-
-/**
- * @brief free all alocated memory on the t_shell struct
-*/
-static void	free_env(t_shell *shell)
-{
-	int		i;
-
-	i = 0;
-	if (!shell->env)
-		return ;
-	while (shell->env[i])
-		free(shell->env[i++]);
-	free(shell->env);
-}
-
-/**
- * @brief allocates envp to the static shell struct
-*/
-static void	initialize_shell(int argc, char **envp)
-{
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	if (argc != 1)
-		exit(0);
-	while (envp[i])
-		i++;
-	get_structure()->env = malloc((i + 1) * sizeof(char *)); //checkar malloc
-	if (!get_structure()->env)
-		exit(0); //free
-	while (j < i)
+	if (ft_strchr(prompt, '$'))
 	{
-		get_structure()->env[j] = ft_strdup(envp[j]);
-		j++;
+		//expand variable
 	}
-	get_structure()->env[j] = NULL;
+	if (ft_strncmp(prompt, "exit", 4) == 0)
+		exit_shell(0);
+	else if (ft_strncmp(prompt, "env", 3) == 0)
+		print_env();
+	else if (ft_strncmp(prompt, "pwd", 3) == 0)
+		pwd();
+	else if (ft_strncmp(prompt, "cd", 2) == 0)
+	{
+		if (ft_strlen(prompt) > 2)
+			cd(prompt + 3);
+		else
+			cd(NULL);
+	}
+	else if (ft_strncmp(prompt, "echo", 4) == 0)
+		echo("");
+	else if (ft_strncmp(prompt, "export", 7) == 0)
+		{
+			if(ft_strlen(prompt) > 6)
+				export(prompt + 7);
+			else
+				export(NULL);
+		}
+	else if (ft_strncmp(prompt, "unset ", 5) == 0)
+		unset(prompt + 6);
 }
 
+/**
+ * @brief	Allocates the prompt cursor to param "char **cursor".
+ * 			the cursor will be the username + the constant CURSOR
+ * 			or just the constant CURSOR if there is no USER variable
+*/
+void	get_prompt_cursor(char **cursor)
+{
+	if (*cursor)
+		free(*cursor);
+	if (get_env_var("USER"))
+	{
+		*cursor = get_env_var("USER")->content + 5;
+		*cursor = ft_strjoin(*cursor, CURSOR);
+	}
+}
+https://github.com/SebastiaoJeronimo/minishell/pull/1/conflicts
 int	main(int argc, char **argv, char **envp)
 {
 	char	*prompt;
+	char	*cursor;
 
 	(void)argv;
+	if (argc != 1)
+		exit(0);
 	prompt = NULL;
-	initialize_shell(argc, envp);
+	cursor = NULL;
+	init_env(envp);
+	get_prompt_cursor(&cursor); // Dont forget to free cursor
 	while (1)
 	{
 		set_signals();
-		//insert user from env to prompt
-		prompt = readline("$>");
+		if (cursor)
+			prompt = readline(cursor);
+		else
+			prompt = readline(CURSOR);
 		if (prompt && *prompt)
 			add_history(prompt);
-		if (!prompt) //check this leak
-		{
-			printf("exit\n");
-			exit(0); // free
-		}
+		if (!prompt)
+			break ;
 		else
 		{
-			cd(prompt);
-			pwd();
+			printf("PROMPT: %d\n", prompt_reader(prompt)); //WIP
+			//simple_prompt_checker(prompt);
 			free(prompt);
 		}
 	}
-	free_env(get_structure());
-	rl_clear_history();
+	printf("exit\n");
+	destroy_env();
+	free(cursor);
+	exit(0); // free
+
+	//rl_clear_history();				is this needed?
 }

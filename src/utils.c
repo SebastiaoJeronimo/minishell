@@ -6,76 +6,52 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 13:42:26 by scosta-j          #+#    #+#             */
-/*   Updated: 2023/09/15 16:15:27 by rvaz             ###   ########.fr       */
+/*   Updated: 2023/11/06 15:17:57 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
 /**
- * @brief looks for a env variable and returns it
- * @param arg the variable to find
- * @param flag if 0, the returned pointer includes the variable name, if 1 it doesn't
- * @return pointer to the env variable, NULL if can't find
- * @example find_env_var("PATH");
+ * @brief print the given content (char *). To be used with ft_lstiter
+ * @param content the content to print (char *)
 */
-char	*find_env_var(char *arg, int flag)
+void var_printcontent(void *content)
 {
-	t_shell	*shell;
-	int		i;
-	char	*var;
-	int		var_len;
-
-	shell = get_structure();
-	i = 0;
-	if (!arg)
-		return (NULL);
-	var = ft_strjoin(arg, "=");
-	if (!var)
-		return (NULL);
-	var_len = ft_strlen(var);
-	while (shell->env[i])
-	{
-		if (!ft_strncmp(var, shell->env[i], var_len))
-		{
-			if (!flag)
-			{
-				free(var);
-				return (shell->env[i]);
-			}
-			else
-			{
-				free(var);
-				return (shell->env[i] + var_len);
-			}
-		}
-		i++;
-	}
-	free(var);
-	return (NULL);
+	printf("%s\n", (char *)content);
 }
 
-// remove_env_var(char *str)
-// {
+/**
+ * @brief checks if the string a valid enviroment variable with a valid name
+ * @return 0 if invalid, 1 if valid
+*/
+bool	var_name_check(const char *str)
+{
+	int	i;
 
-// }
+	i = 0;
+	if (!str || (!ft_isalpha(str[i]) && str[i] != '_')
+		|| ft_strchr(str, '=') == NULL)
+		return (false);
+	while (str[++i] != '=')
+	{
+		if (!ft_isalnum(str[i]) && str[i] != '_')
+			return (false);
+	}
+	return (true);
+}
 
-// add_env_var(char *str)
-// {
-
-// }
-
-// update_env_var(char *var, char *value)
-// {
-
-// }
-
-// adjust_env(void)
-// {
-
-// }
-
-// realloc_env(void)
-// {
-
-// }
+/**
+ * @brief insert a variable before the specified variable on the linked list
+*/
+void	lst_insert_before(t_env_var *lst, t_env_var *new_lst)
+{
+	new_lst->previous = lst->previous;
+	new_lst->next = lst;
+	if(lst->previous)
+	{
+		if (lst->previous->next)
+			lst->previous->next = new_lst;
+		lst->previous = new_lst;
+	}
+}

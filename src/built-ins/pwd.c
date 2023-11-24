@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:10:29 by rvaz              #+#    #+#             */
-/*   Updated: 2023/09/14 19:51:51 by rvaz             ###   ########.fr       */
+/*   Updated: 2023/09/20 20:28:45 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,9 @@
 */
 void	pwd(void)
 {
-	//Check call pwd after PWD unset
-	char *pwd;
-	
-    pwd = getcwd(NULL, 0);
+	char	*pwd;
+
+	pwd = getcwd(NULL, 0);
 	printf("%s\n", pwd);
 	free(pwd);
 }

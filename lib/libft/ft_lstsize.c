@@ -6,13 +6,13 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 23:23:43 by rvaz              #+#    #+#             */
-/*   Updated: 2023/04/19 00:29:32 by rvaz             ###   ########.fr       */
+/*   Updated: 2023/09/16 12:08:45 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_lstsize(t_list *lst)
+int	ft_lstsize(t_env_var *lst)
 {
 	int	i;
 
@@ -29,9 +29,9 @@ int	ft_lstsize(t_list *lst)
 #include <stdio.h>
 int	main()
 {
-	t_list *list1;
-	t_list *list2;
-	t_list *list3;
+	t_env_var *list1;
+	t_env_var *list2;
+	t_env_var *list3;
 
 	list1 = ft_lstnew("");
 	list2 = ft_lstnew("");
