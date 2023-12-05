@@ -40,7 +40,6 @@ typedef struct s_envp
 	void				(*print)(void);						//  [x] (F) print all env vars
 	void				(*print_alpha)(void);				//	[x] (F) prints variables sorted alphabetically
 	void				(*destroy)();						//	[x] (F) properly frees everything
-	
 															//			that was allocated
 }				t_envp;
 
@@ -49,6 +48,13 @@ typedef struct		s_prompt
 	char			*str;
 	struct s_prompt	*next;
 }				t_prompt;
+
+// typedef struct		s_split
+// {
+// 	char			*str;									// Command + flags
+// 	t_redir			*redirects;
+// 	s_split			*next;
+// }				t_split;
 
 t_envp	*get_env_struct(void);
 void	set_signals(void);

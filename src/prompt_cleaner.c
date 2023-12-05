@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 13:18:31 by rvaz              #+#    #+#             */
-/*   Updated: 2023/11/10 16:38:29 by rvaz             ###   ########.fr       */
+/*   Updated: 2023/12/04 21:31:50 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int	prompt_reader(const char *prompt)
 	}
 	trim = ft_strtrim(prompt, " ");
 	new_prompt = space_trim(trim); 
-	split_prompt(new_prompt);
+	//split_prompt(new_prompt);
 	if (trim)
 		free(trim);
 	if (new_prompt)
@@ -119,22 +119,14 @@ int	prompt_reader(const char *prompt)
 	return (0);
 }
 
+// TODAYS WORK
+
 // void	split_prompt(char *prompt)
 // {
-// 	int	i;
-// 	int	j;
 
-// 	i = 0;
-// 	j = 0;
-// 	while (prompt[i] && prompt[i] != ' ')
-// 	{
-// 		while (prompt[i] && prompt[i] != '\"' && prompt[i] != '\'')
-
-// 	}
-// 	if (prompt[i])
-// 		split_prompt(prompt[i]);
 // }
 
+// HEREDOC execution has priority over other redirections
 
 //expand // "$PWD" becomes ./path
 
